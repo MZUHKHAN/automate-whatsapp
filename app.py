@@ -47,6 +47,7 @@ def reply():
         elif option == 4:
             res.message(
                 "We have multiple stores across the city. Our main center is at *4/54, New Delhi*")
+            msg.persistent_action("https://maps.app.goo.gl/kodYwNPtGuLgch7N8")
         else:
             res.message("Please enter a valid response")
     elif user["status"] == "ordering":
