@@ -66,18 +66,18 @@ def reply():
                      "Minor km Services", "Major km Services", "Tyre Change", "Car Dainting", "Engine Services", "WindShield Services"]
             selected = cakes[option - 1]
             users.update_one(
-                {"number": number}, {"$set": {"status": "address"}})
+                {"number": number}, {"$set": {"status": "appointment"}})
             users.update_one(
                 {"number": number}, {"$set": {"item": selected}})
             res.message("Thanks for your service selection😉")
-            res.message("Please enter your address to confirm the order")
+            res.message("Please enter datetime to visit the workshop")
         else:
             res.message("Please enter a valid response")
-    elif user["status"] == "address":
+    elif user["status"] == "appointment":
         selected = user["item"]
-        res.message("Thanks for shopping with us 😊")
-        res.message(f"Your order for *{selected}* has been received and will be delivered within an hour")
-        orders.insert_one({"number": number, "item": selected, "address": text, "order_time": datetime.now()})
+        res.message("Appointment done!See you in the workshop 😊")
+        res.message(f"Your appointment for *{selected}* has been received and we look forward to see you in the workshop to provide better serivces")
+        orders.insert_one({"number": number, "item": selected, "appointment": text, "order_time": datetime.now()})
         users.update_one(
             {"number": number}, {"$set": {"status": "ordered"}})
     elif user["status"] == "ordered":
