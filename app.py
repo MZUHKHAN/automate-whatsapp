@@ -49,7 +49,7 @@ def reply():
                 "We have branch in bur dubai https://maps.app.goo.gl/kodYwNPtGuLgch7N8 *")
         else:
             res.message("Please enter a valid response")
-    elif user["status"] == "ordering":
+    elif user["status"] == "enquiry":
         try:
             option = int(text)
         except:
