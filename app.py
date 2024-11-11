@@ -89,6 +89,5 @@ def reply():
     users.update_one({"number": number}, {"$push": {"messages": {"text": text, "date": datetime.now()}}})
     return str(res)
 
-
 if __name__ == "__main__":
     app.run()
