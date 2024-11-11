@@ -80,11 +80,11 @@ def reply():
                 "4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n 0️⃣ Go Back")
             brand = ["Pirelli", "Bridgestone", "Continental",
                      "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop"]
-
-            price = users.find_one({"price": brand})
+            selected = brand[option - 1]
+            price = users.find_one({"price": selected})
 
             res.message("Thanks for your tyre selection😉")
-            res.message(f"We have the *{brand}* available in our workshop for *{price}*")
+            res.message(f"We have the *{selected}* available in our workshop for *{price}*")
 
         else:
             res.message("Please enter a valid response")
