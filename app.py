@@ -99,6 +99,8 @@ def reply():
                 price = users.find_one({"price": select})
                 res.message("Thanks for your tyre selection😉")
                 res.message(f"We have the *{select}* available in our workshop for *{price}*")
+                users.update_one(
+                    {"number": number}, {"$set": {"status": "appointment"}})
 
         else:
             res.message("Please enter a valid response")
