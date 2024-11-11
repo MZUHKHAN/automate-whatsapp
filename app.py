@@ -82,8 +82,7 @@ def reply():
                 "4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n 0️⃣ Go Back")
             brand = ["Pirelli", "Bridgestone", "Continental",
                      "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop"]
-            select = brand[option1 - 1]
-           
+            
             if option1 == 0:
                 users.update_one(
                 {"number": number}, {"$set": {"status": "tyre"}})
@@ -91,6 +90,8 @@ def reply():
                     "You can select one of the following tyre brand looking for: \n\n1️⃣ Pirelli \n2️⃣ Bridgestone \n3️⃣ Continental \n"
                     "4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n 0️⃣ Go Back")
             elif 1 <= option1 <= 6:
+                
+                select = brand[option1 - 1]
                 users.update_one(
                     {"number": number}, {"$set": {"status": "tyre"}})
                 users.update_one(
