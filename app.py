@@ -8,9 +8,9 @@ cluster = MongoClient("mongodb+srv://fathepur78624:Smile123@cluster0.ie3yd.mongo
 db = cluster["Bakery"]
 users = db["users"]
 orders = db["orders"]
+tyres  = db["tyres"]
 
 app = Flask(__name__)
-
 
 @app.route("/", methods=["get", "post"])
 def reply():
@@ -19,10 +19,10 @@ def reply():
     res = MessagingResponse()
     user = users.find_one({"number": number})
     if bool(user) == False:
-        msg = res.message("Hi, thanks for contacting *The Red Velvet*.\nYou can choose from one of the options below: "
-                    "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *order* snacks \n 3️⃣ To know our *working hours* \n 4️⃣ "
+        msg = res.message("Hi, thanks for contacting *Sama Al Ramlah Auto Maint*.\nYou can choose from one of the options below: "
+                    "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *To know our services* \n 3️⃣ To know our *working hours* \n 4️⃣ "
                     "To get our *address*")
-
+        msg.media("https://etimg.etb2bimg.com/photo/85364012.cms")
         users.insert_one({"number": number, "status": "main", "messages": []})
     elif user["status"] == "main":
         try:
@@ -33,23 +33,23 @@ def reply():
 
         if option == 1:
             res.message(
-                "You can contact us through phone or e-mail.\n\n*Phone*: 991234 56789 \n*E-mail* : contact@theredvelvet.io")
+                "You can contact us through phone or e-mail.\n\n*Phone*: 971234 56789 \n*E-mail* : contact@carservices.io")
         elif option == 2:
-            res.message("You have entered *ordering mode*.")
+            res.message("You have entered *Enqiry mode*.")
             users.update_one(
-                {"number": number}, {"$set": {"status": "ordering"}})
+                {"number": number}, {"$set": {"status": "enquiry"}})
             res.message(
-                "You can select one of the following cakes to order: \n\n1️⃣ Red Velvet  \n2️⃣ Dark Forest \n3️⃣ Ice Cream Cake"
-                "\n4️⃣ Plum Cake \n5️⃣ Sponge Cake \n6️⃣ Genoise Cake \n7️⃣ Angel Cake \n8️⃣ Carrot Cake \n9️⃣ Fruit Cake  \n0️⃣ Go Back")
+                "You can select one of the following services to enquire: \n\n1️⃣ Battery Services  \n2️⃣ Car AC Services \n3️⃣ Car Inspection \n"
+                "4️⃣ Engine Services \n5️⃣ Oil Change \n6️⃣ Tyre Services \n 0️⃣ Go Back")
         elif option == 3:
             res.message("We work from *9 a.m. to 5 p.m*.")
 
         elif option == 4:
-            res.message(
-                "We have multiple stores across the city. Our main center is at *4/54, New Delhi*")
+             res.message(
+                "We have branch in bur dubai https://maps.app.goo.gl/kodYwNPtGuLgch7N8 *")
         else:
             res.message("Please enter a valid response")
-    elif user["status"] == "ordering":
+    elif user["status"] == "enquiry":
         try:
             option = int(text)
         except:
@@ -59,36 +59,63 @@ def reply():
             users.update_one(
                 {"number": number}, {"$set": {"status": "main"}})
             res.message("You can choose from one of the options below: "
-                        "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *order* snacks \n 3️⃣ To know our *working hours* \n 4️⃣ "
-                        "To get our *address*")
-        elif 1 <= option <= 9:
-            cakes = ["Red Velvet Cake", "Dark Forest Cake", "Ice Cream Cake",
-                     "Plum Cake", "Sponge Cake", "Genoise Cake", "Angel Cake", "Carrot Cake", "Fruit Cake"]
+                        "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *To know our services* \n 3️⃣ To know our *working hours* \n 4️⃣ "
+                        "To get our *address* \n")
+    
+        elif 1 <= option <= 5:
+            cakes = ["Battery Services", "Car AC Services", "Car Inspection",
+                     "Engine Services", "Oil Change", "Tyre Services"]
             selected = cakes[option - 1]
             users.update_one(
-                {"number": number}, {"$set": {"status": "address"}})
+                {"number": number}, {"$set": {"status": "appointment"}})
             users.update_one(
                 {"number": number}, {"$set": {"item": selected}})
-            res.message("Excellent choice 😉")
-            res.message("Please enter your address to confirm the order")
+            res.message("Thanks for your service selection😉")
+            res.message("Please enter datetime to visit the workshop")
+        elif option == 6 :
+            users.update_one(
+                {"number": number}, {"$set": {"status": "tyre"}})
+            option1 = int(text)
+            service = "Tyre Services"
+            res.message(
+                "You can select one of the following tyre brand looking for: \n\n1️⃣ Pirelli \n2️⃣ Bridgestone \n3️⃣ Continental \n"
+                "4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n 0️⃣ Go Back")
+            brand = ["Pirelli", "Bridgestone", "Continental",
+                     "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop"]
+            select = brand[option1 - 1]
+           
+            if option1 == 0:
+                users.update_one(
+                {"number": number}, {"$set": {"status": "tyre"}})
+                res.message(
+                    "You can select one of the following tyre brand looking for: \n\n1️⃣ Pirelli \n2️⃣ Bridgestone \n3️⃣ Continental \n"
+                    "4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n 0️⃣ Go Back")
+            elif 1 <= option1 <= 6:
+                users.update_one(
+                    {"number": number}, {"$set": {"status": "tyre"}})
+                users.update_one(
+                    {"number": number}, {"$set": {"item": select}})
+                price = users.find_one({"price": select})
+                res.message("Thanks for your tyre selection😉")
+                res.message(f"We have the *{select}* available in our workshop for *{price}*")
+
         else:
             res.message("Please enter a valid response")
-    elif user["status"] == "address":
+    elif user["status"] == "appointment":
         selected = user["item"]
-        res.message("Thanks for shopping with us 😊")
-        res.message(f"Your order for *{selected}* has been received and will be delivered within an hour")
-        orders.insert_one({"number": number, "item": selected, "address": text, "order_time": datetime.now()})
+        res.message("Appointment done!See you in the workshop 😊")
+        res.message(f"Your appointment for *{selected}* has been received and we look forward to see you in the workshop to provide better serivces")
+        orders.insert_one({"number": number, "item": selected, "appointment": text, "order_time": datetime.now()})
         users.update_one(
             {"number": number}, {"$set": {"status": "ordered"}})
     elif user["status"] == "ordered":
         res.message("Hi, thanks for contacting again.\nYou can choose from one of the options below: "
-                    "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *order* snacks \n 3️⃣ To know our *working hours* \n 4️⃣ "
+                    "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *To know our services* \n 3️⃣ To know our *working hours* \n 4️⃣ "
                     "To get our *address*")
         users.update_one(
             {"number": number}, {"$set": {"status": "main"}})
     users.update_one({"number": number}, {"$push": {"messages": {"text": text, "date": datetime.now()}}})
     return str(res)
-
 
 if __name__ == "__main__":
     app.run()
