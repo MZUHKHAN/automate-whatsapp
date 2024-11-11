@@ -74,15 +74,17 @@ def reply():
             res.message("Thanks for your service selection😉")
             res.message("Please enter datetime to visit the workshop")
         elif option == 6 :
+            users.update_one(
+                {"number": number}, {"$set": {"status": "tyre"}})
+            option1 = int(text)
             service = "Tyre Services"
             res.message(
                 "You can select one of the following tyre brand looking for: \n\n1️⃣ Pirelli \n2️⃣ Bridgestone \n3️⃣ Continental \n"
                 "4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n 0️⃣ Go Back")
             brand = ["Pirelli", "Bridgestone", "Continental",
                      "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop"]
-            selected = brand[option - 1]
+            selected = brand[option1 - 1]
             price = users.find_one({"price": selected})
-
             res.message("Thanks for your tyre selection😉")
             res.message(f"We have the *{selected}* available in our workshop for *{price}*")
 
