@@ -9,7 +9,6 @@ cluster = MongoClient("mongodb+srv://fathepur78624:Smile123@cluster0.ie3yd.mongo
 db = cluster["Bakery"]
 users = db["users"]
 orders = db["orders"]
-tyres  = db["tyres"]
 
 app = Flask(__name__)
 
@@ -40,8 +39,8 @@ def reply():
             users.update_one(
                 {"number": number}, {"$set": {"status": "enquiry"}})
             res.message(
-                "You can select one of the following services to enquire: \n\n1️⃣ Battery Services  \n2️⃣ Car AC Services \n3️⃣ Car Inspection \n"
-                "4️⃣ Engine Services \n5️⃣ Oil Change \n6️⃣ Tyre Services \n 0️⃣ Go Back")
+                "You can select one of the following services to enquire: \n\n1️⃣ Car Inspection  \n2️⃣ Car AC Services \n3️⃣ Battery Change"
+                "\n4️⃣ Minor km Services \n5️⃣ Major km Services \n6️⃣ Tyre Change \n7️⃣ Car Dainting \n8️⃣ Engine Services \n9️⃣ WindShield Services  \n0️⃣ Go Back")
         elif option == 3:
             res.message("We work from *9 a.m. to 5 p.m*.")
 
@@ -61,11 +60,10 @@ def reply():
                 {"number": number}, {"$set": {"status": "main"}})
             res.message("You can choose from one of the options below: "
                         "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *To know our services* \n 3️⃣ To know our *working hours* \n 4️⃣ "
-                        "To get our *address* \n")
-    
-        elif 1 <= option <= 5:
-            cakes = ["Battery Services", "Car AC Services", "Car Inspection",
-                     "Engine Services", "Oil Change", "Tyre Services"]
+                        "To get our *address*")
+        elif 1 <= option <= 9:
+            cakes = ["Car Inspection", "Car AC Services", "Battery Change",
+                     "Minor km Services", "Major km Services", "Tyre Change", "Car Dainting", "Engine Services", "WindShield Services"]
             selected = cakes[option - 1]
             users.update_one(
                 {"number": number}, {"$set": {"status": "appointment"}})
@@ -73,33 +71,6 @@ def reply():
                 {"number": number}, {"$set": {"item": selected}})
             res.message("Thanks for your service selection😉")
             res.message("Please enter datetime to visit the workshop")
-        elif option == 6 :
-            users.update_one(
-                {"number": number}, {"$set": {"status": "tyre"}})
-            option1 = int(text)
-            service = "Tyre Services"
-            res.message(
-                "You can select one of the following tyre brand looking for: \n\n1️⃣ Pirelli \n2️⃣ Bridgestone \n3️⃣ Continental \n"
-                "4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n 0️⃣ Go Back")
-            brand = ["Pirelli", "Bridgestone", "Continental",
-                     "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop"]
-            select = brand[option1 - 1]
-           
-            if option1 == 0:
-                users.update_one(
-                {"number": number}, {"$set": {"status": "tyre"}})
-                res.message(
-                    "You can select one of the following tyre brand looking for: \n\n1️⃣ Pirelli \n2️⃣ Bridgestone \n3️⃣ Continental \n"
-                    "4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n 0️⃣ Go Back")
-            elif 1 <= option1 <= 6:
-                users.update_one(
-                    {"number": number}, {"$set": {"status": "tyre"}})
-                users.update_one(
-                    {"number": number}, {"$set": {"item": select}})
-                price = users.find_one({"price": select})
-                res.message("Thanks for your tyre selection😉")
-                res.message(f"We have the *{select}* available in our workshop for *{price}*")
-
         else:
             res.message("Please enter a valid response")
     elif user["status"] == "appointment":
