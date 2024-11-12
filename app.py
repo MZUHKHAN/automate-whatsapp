@@ -69,7 +69,8 @@ def reply():
                 res.message("Please enter the date and time for tyre change appointment")
                 users.update_one(
                     {"number": number}, {"$set": {"status": "tyre"}})
-            elif users.update_one(
+            else:
+                 users.update_one(
                 {"number": number}, {"$set": {"status": "appointment"}})
             users.update_one(
                 {"number": number}, {"$set": {"item": selected}})
