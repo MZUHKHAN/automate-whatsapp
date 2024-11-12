@@ -40,7 +40,7 @@ def reply():
                 {"number": number}, {"$set": {"status": "enquiry"}})
             res.message(
                 "You can select one of the following services to enquire: \n\n1️⃣ Battery Services  \n2️⃣ Car AC Services \n3️⃣ Car Inspection \n"
-                "4️⃣ Engine Services \n5️⃣ Oil Change \n6️⃣ Tyre Services \n 0️⃣ Go Back")
+                "4️⃣ Engine Services \n5️⃣ Oil Change \n6️⃣ Tyre Services \n0️⃣ Go Back")
         elif option == 3:
             res.message("We work from *9 a.m. to 5 p.m*.")
 
@@ -62,9 +62,8 @@ def reply():
                         "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *To know our services* \n 3️⃣ To know our *working hours* \n 4️⃣ "
                         "To get our *address* \n")
     
-        elif 1 <= option <= 6:
-            cakes = ["Battery Services", "Car AC Services", "Car Inspection",
-                     "Engine Services", "Oil Change", "Tyre Services"]
+        elif 1 <= option <= 5:
+            cakes = ["Battery Services","Car AC Services","Car Inspection","Engine Services","Oil Change","Tyre Services"]
             selected = cakes[option - 1]
             users.update_one(
                 {"number": number}, {"$set": {"status": "appointment"}})
@@ -83,7 +82,7 @@ def reply():
             
         res.message(
                 "You can select one of the following tyre brand looking for: \n\n1️⃣ Pirelli \n2️⃣ Bridgestone \n3️⃣ Continental \n"
-                "4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n 0️⃣ Go Back")
+                "4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n0️⃣ Go Back")
          
         if option1 == 0:
             users.update_one(
