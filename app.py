@@ -62,13 +62,30 @@ def reply():
                         "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *To know our services* \n 3️⃣ To know our *working hours* \n 4️⃣ "
                         "To get our *address*")
         elif 1 <= option <= 9:
+            
             cakes = ["Car Inspection", "Car AC Services", "WindShield Services",
                      "Minor km Services", "Major km Services", "Battery Change", "Car Dainting", "Engine Services", "Tyre Change"]
             selected = cakes[option - 1]
             if selected == "Tyre Change":
-                res.message("Please enter the date and time for tyre change appointment")
+                
+                try:
+                     option1 = int(text)
+                except:
+                    res.message("Please enter a valid response")
+                    return str(res)
+                brand = ["Pirelli", "Bridgestone", "Continental",
+                "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop"]
+                select = brand[option1 - 1]
                 users.update_one(
                     {"number": number}, {"$set": {"status": "tyre"}})
+                users.update_one(
+                    {"number": number}, {"$set": {"item": select}})
+                price = users.find_one({"price": select})
+                res.message("Thanks for your tyre selection😉")
+                res.message(f"We have the *{select}* available in our workshop for *{price}*")
+                users.update_one(
+                    {"number": number}, {"$set": {"status": "appointment"}})
+                res.message("Please enter the date and time for tyre change appointment")
             else:
                 res.message("Thanks for your service selection😉")
                 res.message("Please enter datetime to visit the workshop")
