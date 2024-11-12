@@ -91,7 +91,7 @@ def reply():
             return str(res)
         if option == 0:
             users.update_one(
-                {"number": number}, {"$set": {"status": "enquiry"}}
+                {"number": number}, {"$set": {"status": "enquiry"}})
             res.message(
                 "You can select one of the following services to enquire: \n\n1️⃣ Car Inspection  \n2️⃣ Car AC Services \n3️⃣ WindShield Services"
                 "\n4️⃣ Minor km Services \n5️⃣ Major km Services \n6️⃣ Battery Change \n7️⃣ Car Dainting \n8️⃣ Engine Services \n9️⃣ Tyre Change  \n0️⃣ Go Back")
@@ -103,6 +103,8 @@ def reply():
             res.message("Please enter datetime to visit the workshop")
             users.update_one({"number": number}, {"$set": {"status": "appointment"}})
             users.update_one({"number": number}, {"$set": {"item": select}})
+        else:
+            res.message("Please enter a valid response")
         
     elif user["status"] == "appointment":
         selected = user["item"]
