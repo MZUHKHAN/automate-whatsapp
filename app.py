@@ -62,10 +62,14 @@ def reply():
                         "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *To know our services* \n 3️⃣ To know our *working hours* \n 4️⃣ "
                         "To get our *address*")
         elif 1 <= option <= 9:
-            cakes = ["Car Inspection", "Car AC Services", "Battery Change",
-                     "Minor km Services", "Major km Services", "Tyre Change", "Car Dainting", "Engine Services", "WindShield Services"]
+            cakes = ["Car Inspection", "Car AC Services", "WindShield Services",
+                     "Minor km Services", "Major km Services", "Battery Change", "Car Dainting", "Engine Services", "Tyre Change"]
             selected = cakes[option - 1]
-            users.update_one(
+            if selected == "Tyre Change":
+                res.message("Please enter the date and time for tyre change appointment")
+                users.update_one(
+                    {"number": number}, {"$set": {"status": "tyre"}})
+            elif users.update_one(
                 {"number": number}, {"$set": {"status": "appointment"}})
             users.update_one(
                 {"number": number}, {"$set": {"item": selected}})
