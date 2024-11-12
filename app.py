@@ -62,7 +62,7 @@ def reply():
                         "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *To know our services* \n 3️⃣ To know our *working hours* \n 4️⃣ "
                         "To get our *address* \n")
     
-        elif 1 <= option <= 5:
+        elif 1 <= option <= 6:
             cakes = ["Battery Services", "Car AC Services", "Car Inspection",
                      "Engine Services", "Oil Change", "Tyre Services"]
             selected = cakes[option - 1]
