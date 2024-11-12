@@ -22,7 +22,7 @@ def reply():
         msg = res.message("Hi, thanks for contacting *Sama Al Ramlah Auto Maint*.\nYou can choose from one of the options below: "
                     "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *To know our services* \n 3️⃣ To know our *working hours* \n 4️⃣ "
                     "To get our *address*")
-        msg.media("https://etimg.etb2bimg.com/photo/85364012.cms")
+        msg.media("https://etimg.etb2bimg.com/photo/85364012.cms")  
         users.insert_one({"number": number, "status": "main", "messages": []})
     elif user["status"] == "main":
         try:
@@ -75,22 +75,27 @@ def reply():
         elif option == 6 :
             users.update_one(
                 {"number": number}, {"$set": {"status": "tyre"}})
-            option1 = int(text)
-            service = "Tyre Services"
+             try:
+                option1 = int(text)
+            except:
+                res.message("Please enter a valid response")
+            return str(res)
+            
             res.message(
                 "You can select one of the following tyre brand looking for: \n\n1️⃣ Pirelli \n2️⃣ Bridgestone \n3️⃣ Continental \n"
                 "4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n 0️⃣ Go Back")
-            brand = ["Pirelli", "Bridgestone", "Continental",
-                     "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop"]
-            
+         
             if option1 == 0:
-                users.update_one(
-                {"number": number}, {"$set": {"status": "tyre"}})
-                res.message(
-                    "You can select one of the following tyre brand looking for: \n\n1️⃣ Pirelli \n2️⃣ Bridgestone \n3️⃣ Continental \n"
-                    "4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n 0️⃣ Go Back")
+               users.update_one(
+                {"number": number}, {"$set": {"status": "main"}})
+                res.message("You can choose from one of the options below: "
+                        "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *To know our services* \n 3️⃣ To know our *working hours* \n 4️⃣ "
+                        "To get our *address* \n")
             elif 1 <= option1 <= 6:
-                
+                   
+                brand = ["Pirelli", "Bridgestone", "Continental",
+                "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop"]
+            
                 select = brand[option1 - 1]
                 users.update_one(
                     {"number": number}, {"$set": {"status": "tyre"}})
