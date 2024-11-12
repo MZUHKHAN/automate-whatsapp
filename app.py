@@ -73,13 +73,13 @@ def reply():
                 "\n4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n7️⃣ Yokohama \n8️⃣ Dunlop \n9️⃣ Elvis  \n0️⃣ Go Back")
         
                 try:
-                     option1 = int(text)
+                     option = int(text)
                 except:
                     res.message("Please enter a valid response")
                     return str(res)
                 brand = ["Pirelli", "Bridgestone", "Continental",
                 "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop"]
-                select = brand[option1 - 1]
+                select = brand[option - 1]
                 users.update_one(
                     {"number": number}, {"$set": {"status": "tyre"}})
                 users.update_one(
