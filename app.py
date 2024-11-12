@@ -68,6 +68,10 @@ def reply():
             selected = cakes[option - 1]
             if selected == "Tyre Change":
                 
+                res.message(
+                "You can select one of the following services to enquire: \n\n1️⃣ Pirelli  \n2️⃣ Bridgestone \n3️⃣ Continental"
+                "\n4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n7️⃣ Yokohama \n8️⃣ Dunlop \n9️⃣ Elvis  \n0️⃣ Go Back")
+        
                 try:
                      option1 = int(text)
                 except:
