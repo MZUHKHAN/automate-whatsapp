@@ -68,28 +68,12 @@ def reply():
             selected = cakes[option - 1]
             if selected == "Tyre Change":
                 
+                users.update_one(
+                    {"number": number}, {"$set": {"status": "tyre"}})
                 res.message(
                 "You can select one of the following services to enquire: \n\n1️⃣ Pirelli  \n2️⃣ Bridgestone \n3️⃣ Continental"
                 "\n4️⃣ Goodyear \n5️⃣ Michelin \n6️⃣ BFGoodrich \n7️⃣ Yokohama \n8️⃣ Dunlop \n9️⃣ Elvis  \n0️⃣ Go Back")
-        
-                try:
-                     option = int(text)
-                except:
-                    res.message("Please enter a valid response")
-                    return str(res)
-                brand = ["Pirelli", "Bridgestone", "Continental",
-                "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop"]
-                select = brand[option - 1]
-                users.update_one(
-                    {"number": number}, {"$set": {"status": "tyre"}})
-                users.update_one(
-                    {"number": number}, {"$set": {"item": select}})
-                price = users.find_one({"price": select})
-                res.message("Thanks for your tyre selection😉")
-                res.message(f"We have the *{select}* available in our workshop for *{price}*")
-                users.update_one(
-                    {"number": number}, {"$set": {"status": "appointment"}})
-                res.message("Please enter the date and time for tyre change appointment")
+                
             else:
                 res.message("Thanks for your service selection😉")
                 res.message("Please enter datetime to visit the workshop")
@@ -99,6 +83,27 @@ def reply():
                 {"number": number}, {"$set": {"item": selected}})
         else:
             res.message("Please enter a valid response")
+    elif user["status"] == "tyre":
+        try:
+            option = int(text)
+        except:
+            res.message("Please enter a valid response")
+            return str(res)
+        if option == 0:
+            users.update_one(
+                {"number": number}, {"$set": {"status": "enquiry"}}
+            res.message(
+                "You can select one of the following services to enquire: \n\n1️⃣ Car Inspection  \n2️⃣ Car AC Services \n3️⃣ WindShield Services"
+                "\n4️⃣ Minor km Services \n5️⃣ Major km Services \n6️⃣ Battery Change \n7️⃣ Car Dainting \n8️⃣ Engine Services \n9️⃣ Tyre Change  \n0️⃣ Go Back")
+        elif 1 <= option <= 9:
+            brand = ["Pirelli", "Bridgestone", "Continental",
+            "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop","Elvis"]
+            select = brand[option - 1]
+            res.message("Thanks for your service selection😉")
+            res.message("Please enter datetime to visit the workshop")
+            users.update_one({"number": number}, {"$set": {"status": "appointment"}})
+            users.update_one({"number": number}, {"$set": {"item": select}})
+        
     elif user["status"] == "appointment":
         selected = user["item"]
         res.message("Appointment done!See you in the workshop 😊")
