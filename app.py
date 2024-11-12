@@ -9,6 +9,7 @@ cluster = MongoClient("mongodb+srv://fathepur78624:Smile123@cluster0.ie3yd.mongo
 db = cluster["Bakery"]
 users = db["users"]
 orders = db["orders"]
+tyres = db["Tyres"]
 
 app = Flask(__name__)
 
@@ -99,7 +100,11 @@ def reply():
             brand = ["Pirelli", "Bridgestone", "Continental",
             "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop","Elvis"]
             select = brand[option - 1]
+            price = tyres.find_one({"price": price})
+
             res.message("Thanks for your service selection😉")
+            res.message(f"We have *{select}* at price of *{price}* ")
+
             res.message("Please enter datetime to visit the workshop")
             users.update_one({"number": number}, {"$set": {"status": "appointment"}})
             users.update_one({"number": number}, {"$set": {"item": select}})
@@ -124,4 +129,4 @@ def reply():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.ru
