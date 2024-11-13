@@ -102,9 +102,9 @@ def reply():
             "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop","Elvis"]
             select = brand[option - 1]
             #price = tyres.find_one({"name": select})
-            df = pd.DataFrame(tyres.find_one({"name": select}))
+            df = pd.DataFrame(tyres.find_one({"name": select}),index=[0])
             #res.message("Thanks for your service selection😉")
-            res.message(f"We have *{select}* at price of *{df[0]}* ")
+            res.message(f"We have *{select}* at price of *{df}* ")
 
             res.message("Please enter datetime to visit the workshop")
             users.update_one({"number": number}, {"$set": {"status": "appointment"}})
