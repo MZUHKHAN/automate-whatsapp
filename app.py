@@ -100,10 +100,11 @@ def reply():
             brand = ["Pirelli", "Bridgestone", "Continental",
             "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop","Elvis"]
             select = brand[option - 1]
-            price = tyres.find_one({},{'_id':0,'name': 0,'price':1 })
+            name = tyres.find_one({"name": select})
+            price = name.find_one({},{'_id':0,'name': 0,'price':1 })
             for select in price:
-             res.message("Thanks for your service selection😉")
-            res.message(f"We have *{select}* at price of *{price}* ")
+            #res.message("Thanks for your service selection😉")
+             res.message(f"We have *{select}* at price of *{price}* ")
 
             res.message("Please enter datetime to visit the workshop")
             users.update_one({"number": number}, {"$set": {"status": "appointment"}})
