@@ -3,6 +3,7 @@ from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
 from pymongo import MongoClient
 from datetime import datetime
+import pandas as pd 
 
 # Replace YOUR_URL with your mongodb url
 cluster = MongoClient("mongodb+srv://fathepur78624:Smile123@cluster0.ie3yd.mongodb.net/")
@@ -100,11 +101,10 @@ def reply():
             brand = ["Pirelli", "Bridgestone", "Continental",
             "Goodyear", "Michelin", "BFGoodrich","Yokohama","Dunlop","Elvis"]
             select = brand[option - 1]
-            name = tyres.find_one({"name": select})
-            price = name.find_one({},{'_id':0,'name': 0,'price':1 })
-            for select in price:
+            #price = tyres.find_one({"name": select})
+            df = pd.DataFrame(tyres.find_one({"name": select}))
             #res.message("Thanks for your service selection😉")
-             res.message(f"We have *{select}* at price of *{price}* ")
+            res.message(f"We have *{select}* at price of *{df}* ")
 
             res.message("Please enter datetime to visit the workshop")
             users.update_one({"number": number}, {"$set": {"status": "appointment"}})
