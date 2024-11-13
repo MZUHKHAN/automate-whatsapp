@@ -104,7 +104,7 @@ def reply():
             #price = tyres.find_one({"name": select})
             df = pd.DataFrame(tyres.find_one({"name": select}))
             #res.message("Thanks for your service selection😉")
-            res.message(f"We have *{select}* at price of *{df}* ")
+            res.message(f"We have *{select}* at price of *{df[0]}* ")
 
             res.message("Please enter datetime to visit the workshop")
             users.update_one({"number": number}, {"$set": {"status": "appointment"}})
