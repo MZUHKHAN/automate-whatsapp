@@ -106,12 +106,12 @@ def reply():
             #res.message("Thanks for your service selection😉")
             res.message(f"We have *{select}* at price of *{df}* ")
            
-            date_format ="%d%m%y"
+            format = "%d-%m-%Y"
             isValidDate = True
         
-            res.message("Enter a datetime as DDMMYY format for appointment")
+            res.message("Enter a datetime as DD-MM-YY format for appointment")
             try:
-                datetime.strptime(text, date_format)
+                datetime.strptime(text, format)
             except ValueError:
                 isValidDate = False
             
