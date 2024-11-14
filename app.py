@@ -108,12 +108,12 @@ def reply():
            
             date_format ="%d%m%y"
             isValidDate = True
+        
+            res.message("Enter a datetime as DDMMYY format for appointment")
             try:
                 datetime.strptime(text, date_format)
             except ValueError:
                 isValidDate = False
-        
-            res.message("Enter a datetime as DDMMYY format for appointment")
             
             if(isValidDate):
              users.update_one({"number": number}, {"$set": {"status": "appointment"}})
