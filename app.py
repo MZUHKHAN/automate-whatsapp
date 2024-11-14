@@ -106,7 +106,13 @@ def reply():
             #res.message("Thanks for your service selection😉")
             res.message(f"We have *{select}* at price of *{df}* ")
 
-            res.message("Please enter datetime to visit the workshop")
+            res.message("Enter a datetime as YYYY-MM-DD:HH:MM format for appointment")
+            try:
+              option = int(text)
+            except:
+             res.message("Please enter a valid response")
+            return str(res)
+        if option == 0:
             users.update_one({"number": number}, {"$set": {"status": "appointment"}})
             users.update_one({"number": number}, {"$set": {"item": select}})
         else:
