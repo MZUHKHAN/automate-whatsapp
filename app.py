@@ -106,17 +106,20 @@ def reply():
             #res.message("Thanks for your service selection😉")
             res.message(f"We have *{select}* at price of *{df}* ")
 
-            res.message("Enter a datetime as YYYY-MM-DD:HH:MM format for appointment")
+            res.message("Enter a datetime as DDMMYY format for appointment")
+            date_time = int(text)
+            date_format ="%d%m%y"
+            isValidDate = True
             try:
-              option = int(text)
-            except:
-             res.message("Please enter a valid response")
-            return str(res)
-        if option == 0:
-            users.update_one({"number": number}, {"$set": {"status": "appointment"}})
-            users.update_one({"number": number}, {"$set": {"item": select}})
-        else:
-            res.message("Please enter a valid response")
+                datetime.strptime(date_time, date_format)
+            except ValueError:
+                isValidDate = False
+        
+            if(isValidDate):
+             users.update_one({"number": number}, {"$set": {"status": "appointment"}})
+             users.update_one({"number": number}, {"$set": {"item": select}})
+            else:
+                res.message("Please enter a valid response")
         
     elif user["status"] == "appointment":
         selected = user["item"]
