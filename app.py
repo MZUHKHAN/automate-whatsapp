@@ -105,16 +105,16 @@ def reply():
             df = pd.DataFrame(tyres.find_one({"name": select}),index=[0])
             #res.message("Thanks for your service selection😉")
             res.message(f"We have *{select}* at price of *{df}* ")
-
-            res.message("Enter a datetime as DDMMYY format for appointment")
-            date_time = int(text)
+           
             date_format ="%d%m%y"
             isValidDate = True
             try:
-                datetime.strptime(date_time, date_format)
+                datetime.strptime(text, date_format)
             except ValueError:
                 isValidDate = False
         
+            res.message("Enter a datetime as DDMMYY format for appointment")
+            
             if(isValidDate):
              users.update_one({"number": number}, {"$set": {"status": "appointment"}})
              users.update_one({"number": number}, {"$set": {"item": select}})
