@@ -139,4 +139,4 @@ def reply():
 
 
 if __name__ == "__main__":
-    app.ru
+    app.run()
