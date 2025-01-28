@@ -103,10 +103,10 @@ def reply():
             brand = ["Pirelli", "Bridgestone", "Continental",
                      "Goodyear", "Michelin", "BFGoodrich", "Yokohama", "Dunlop", "Elvis"]
             select = brand[option - 1]
-            # price = tyres.find_one({"name": select})
-            df = pd.DataFrame(tyres.find_one({"name": select}), index=[0])
+            price = tyres.find_one({"name": select},{"price":1})
+            #df = pd.DataFrame(tyres.find_one({"name": select}), index=[0])
             # res.message("Thanks for your service selection😉")
-            res.message(f"We have *{select}* at price of *{df}* ")
+            res.message(f"We have *{select}* at price of *{price}* ")
 
             format = "%d-%m-%Y"
             isValidDate = True
