@@ -133,17 +133,11 @@ def reply():
             {"number": number}, {"$set": {"status": "ordered"}})
     elif user["status"] == "ordered":
 
-        try:
-            text = "Hi"
-        except:
-         res.message("Please enter a valid response")
-        return str(res)
-
-    res.message("Hi, thanks for contacting again.\nYou can choose from one of the options below: "
-            "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *To know our services* \n 3️⃣ To know our *working hours* \n 4️⃣ "
-            "To get our *address*")
-    users.update_one(
-    {"number": number}, {"$set": {"status": "main"}})
+        res.message("Hi, thanks for contacting again.\nYou can choose from one of the options below: "
+                    "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *order* snacks \n 3️⃣ To know our *working hours* \n 4️⃣ "
+                    "To get our *address*")
+        users.update_one(
+            {"number": number}, {"$set": {"status": "main"}})
     users.update_one({"number": number}, {"$push": {"messages": {"text": text, "date": datetime.now()}}})
     return str(res)
 
