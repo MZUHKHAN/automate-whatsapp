@@ -103,16 +103,16 @@ def reply():
             brand = ["Pirelli", "Bridgestone", "Continental",
                      "Goodyear", "Michelin", "BFGoodrich", "Yokohama", "Dunlop", "Elvis"]
             select = brand[option - 1]
-            price = tyres.find({"name": select},{"price": 1 })
+            price = tyres.find_one({"name": select},{"price": 1 })
             print(price)
             #df = pd.DataFrame(tyres.find_one({"name": select}), index=[0])
             # res.message("Thanks for your service selection😉")
             res.message(f"We have *{select}* at price of *{price}* ")
 
-            date_format = '%Y-%m-%d'
+            date_format = '%Y-%m-%d %H:%M'
             isValidDate = True
 
-            res.message("Enter a datetime as DD-MM-YY format for appointment")
+            res.message("Enter a datetime as YY-MM-DD HH:MM format for appointment")
             try:
                 isValidDate = bool(datetime.strptime(text, date_format))
             except ValueError:
