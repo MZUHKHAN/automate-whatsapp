@@ -118,7 +118,7 @@ def reply():
             except ValueError:
                 isValidDate = False
 
-            if (isValidDate):
+            if (str(isValidDate)):
                 users.update_one({"number": number}, {"$set": {"status": "appointment"}})
                 users.update_one({"number": number}, {"$set": {"item": select}})
             else:
