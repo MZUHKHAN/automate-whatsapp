@@ -103,7 +103,7 @@ def reply():
             brand = ["Pirelli", "Bridgestone", "Continental",
                      "Goodyear", "Michelin", "BFGoodrich", "Yokohama", "Dunlop", "Elvis"]
             select = brand[option - 1]
-            price = tyres.find_one({"brand": select},{"price": 1 })
+            price = tyres.find_one({"brand": select},{"_id":0,"price": 1 })
             print(price)
             #df = pd.DataFrame(tyres.find_one({"name": select}), index=[0])
             # res.message("Thanks for your service selection😉")
