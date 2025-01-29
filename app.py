@@ -109,7 +109,7 @@ def reply():
             # res.message("Thanks for your service selection😉")
             res.message(f"We have *{select}* at price of *{price}* ")
 
-            date_format = '%Y-%m-%d %H:%M'
+            date_format = '%Y-%m-%d %H:%M:%S'
             isValidDate = True
 
             res.message("Enter a datetime as YY-MM-DD HH:MM format for appointment")
