@@ -109,16 +109,16 @@ def reply():
             # res.message("Thanks for your service selection😉")
             res.message(f"We have *{select}* at price of *{price}* ")
 
-            format = "%d-%m-%Y"
+            date_format = '%Y-%m-%d'
             isValidDate = True
 
             res.message("Enter a datetime as DD-MM-YY format for appointment")
-            #try:
-            date_time = text.strftime("%m/%d/%Y, %H:%M:%S")
-            #except ValueError:
-                #isValidDate = False
+            try:
+                isValidDate = bool(datetime.strptime(text, date_format))
+            except ValueError:
+                isValidDate = False
 
-            if (date_time):
+            if (isValidDate):
                 users.update_one({"number": number}, {"$set": {"status": "appointment"}})
                 users.update_one({"number": number}, {"$set": {"item": select}})
             else:
